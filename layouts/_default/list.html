@@ -16,14 +16,14 @@
         <li class="post-item">
           <a href="{{ .RelPermalink }}">{{ .Title }}</a>
           {{ with .Date }}<span class="post-date">— {{ .Format "Jan 2, 2006" }}</span>{{ end }}
-          <div class="badges" aria-label="Taxonomies">
+          <ul class="badges">
             {{ with .Params.categories }}
-              {{ range . }}<a class="badge badge-category" href="{{ (printf "/categories/%s/" (urlize .)) | relURL }}">{{ . }}</a>{{ end }}
+              {{ range . }}<li><a class="badge badge-category" href="{{ (printf "/categories/%s/" (urlize .)) | relURL }}">{{ . }}</a></li>{{ end }}
             {{ end }}
             {{ with .Params.tags }}
-              {{ range $i, $t := . }}<a class="badge badge-tag tag-color-{{ mod $i 6 }}" href="{{ (printf "/tags/%s/" (urlize $t)) | relURL }}">#{{ $t }}</a>{{ end }}
+              {{ range $i, $t := . }}<li><a class="badge badge-tag tag-color-{{ mod $i 6 }}" href="{{ (printf "/tags/%s/" (urlize $t)) | relURL }}">#{{ $t }}</a></li>{{ end }}
             {{ end }}
-          </div>
+          </ul>
         </li>
       {{ end }}
     </ul>
@@ -42,14 +42,14 @@
         <li class="post-item">
           <a href="{{ .RelPermalink }}">{{ .Title }}</a>
           {{ with .Date }}<span class="post-date">— {{ .Format "Jan 2, 2006" }}</span>{{ end }}
-          <div class="badges" aria-label="Taxonomies">
+          <ul class="badges">
             {{ with .Params.categories }}
-              {{ range . }}<a class="badge badge-category" href="{{ (printf "/categories/%s/" (urlize .)) | relURL }}">{{ . }}</a>{{ end }}
+              {{ range . }}<li><a class="badge badge-category" href="{{ (printf "/categories/%s/" (urlize .)) | relURL }}">{{ . }}</a></li>{{ end }}
             {{ end }}
             {{ with .Params.tags }}
-              {{ range $i, $t := . }}<a class="badge badge-tag tag-color-{{ mod $i 6 }}" href="{{ (printf "/tags/%s/" (urlize $t)) | relURL }}">#{{ $t }}</a>{{ end }}
+              {{ range $i, $t := . }}<li><a class="badge badge-tag tag-color-{{ mod $i 6 }}" href="{{ (printf "/tags/%s/" (urlize $t)) | relURL }}">#{{ $t }}</a></li>{{ end }}
             {{ end }}
-          </div>
+          </ul>
         </li>
       {{ end }}
     </ul>

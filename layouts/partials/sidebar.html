@@ -18,8 +18,8 @@
   </section>
 
   {{ with .Site.Menus.main }}
-  <nav class="widget" aria-label="Main Navigation">
-    <h3 class="widget-title">Explore</h3>
+  <nav class="widget" aria-labelledby="sidebar-explore-title">
+    <h3 id="sidebar-explore-title" class="widget-title">Explore</h3>
     <ul class="menu">
     {{ range . }}
       <li><a href="{{ .URL }}">{{ .Name }}</a></li>

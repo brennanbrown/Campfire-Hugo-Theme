@@ -28,8 +28,9 @@
   --heading: var(--campfire-coal);
 
   /* Link tokens */
-  --link: var(--campfire-ember);
-  --link-hover: var(--campfire-flame);
+  /* High-contrast link colors (WCAG AA on light bg) */
+  --link: #c2410c; /* orange-700 */
+  --link-hover: #ea580c; /* orange-600 */
 
   /* Category color token */
   --category: var(--campfire-stone);
@@ -127,7 +128,7 @@ h2 { font-size: 1.6rem; line-height: 1.2; margin: 1rem 0 0.6rem; }
   h2 { font-size: 1.8rem; }
 }
 .post-title { margin-bottom: 0.25rem; }
-.post-date { color: var(--campfire-ash); font-size: 0.9rem; margin-top: 0; }
+.post-date { color: var(--campfire-stone); font-size: 0.9rem; margin-top: 0; }
 
 .post-list { list-style: none; padding: 0; }
 .post-item { margin: 1.75rem 0; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
@@ -136,7 +137,7 @@ h2 { font-size: 1.6rem; line-height: 1.2; margin: 1rem 0 0.6rem; }
 .post-item > a { color: var(--link); text-decoration: none; font-weight: 700; }
 .post-item > a:hover { color: var(--link-hover); text-decoration: underline; }
 /* Taxonomy badges */
-.badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.25rem; }
+.badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.25rem; list-style: none; padding: 0; }
 .badge {
   display: inline-block;
   padding: 0.15rem 0.5rem;
@@ -146,20 +147,23 @@ h2 { font-size: 1.6rem; line-height: 1.2; margin: 1rem 0 0.6rem; }
   border-radius: 999px;
   background: var(--surface);
   border: 1px solid var(--border);
-  color: var(--campfire-ember);
+  /* Use body text color for contrast */
+  color: var(--text);
   text-decoration: none;
 }
 .badge:hover { background: color-mix(in srgb, var(--campfire-ember) 10%, var(--surface)); border-color: var(--campfire-ember); }
 .badge-category { color: var(--category); }
 
-/* Tag color variants */
-.badge-tag[class*="tag-color-"] { background: color-mix(in srgb, currentColor 12%, var(--surface)); border-color: currentColor; }
-.badge-tag.tag-color-0 { color: var(--tag-0); }
-.badge-tag.tag-color-1 { color: var(--tag-1); }
-.badge-tag.tag-color-2 { color: var(--tag-2); }
-.badge-tag.tag-color-3 { color: var(--tag-3); }
-.badge-tag.tag-color-4 { color: var(--tag-4); }
-.badge-tag.tag-color-5 { color: var(--tag-5); }
+/* Tag chips: keep color identity via border/dot, ensure text contrast */
+.badge-tag { position: relative; padding-left: 0.75rem; }
+.badge-tag::before { content: ""; position: absolute; left: 0.45rem; top: 50%; width: 0.35rem; height: 0.35rem; border-radius: 999px; transform: translate(-50%, -50%); background: currentColor; }
+.badge-tag[class*="tag-color-"] { color: var(--text); background: color-mix(in srgb, var(--chip, var(--border)) 18%, var(--surface)); border-color: var(--chip, var(--border)); }
+.badge-tag.tag-color-0 { --chip: var(--tag-0); }
+.badge-tag.tag-color-1 { --chip: var(--tag-1); }
+.badge-tag.tag-color-2 { --chip: var(--tag-2); }
+.badge-tag.tag-color-3 { --chip: var(--tag-3); }
+.badge-tag.tag-color-4 { --chip: var(--tag-4); }
+.badge-tag.tag-color-5 { --chip: var(--tag-5); }
 
 /* Accessibility */
 .skip-link { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
@@ -250,15 +254,17 @@ a:focus-visible { text-decoration: underline; }
 .menu a { color: var(--link); text-decoration: none; }
 .menu a:hover, .menu a:focus { color: var(--link-hover); text-decoration: underline; }
 .tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.tag { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.85rem; text-decoration: none; }
-.tag:hover { filter: brightness(1.05); }
-/* Sidebar tag color variants */
-.tag.tag-color-0 { color: var(--tag-0); background: color-mix(in srgb, var(--tag-0) 12%, var(--surface)); }
-.tag.tag-color-1 { color: var(--tag-1); background: color-mix(in srgb, var(--tag-1) 12%, var(--surface)); }
-.tag.tag-color-2 { color: var(--tag-2); background: color-mix(in srgb, var(--tag-2) 12%, var(--surface)); }
-.tag.tag-color-3 { color: var(--tag-3); background: color-mix(in srgb, var(--tag-3) 12%, var(--surface)); }
-.tag.tag-color-4 { color: var(--tag-4); background: color-mix(in srgb, var(--tag-4) 12%, var(--surface)); }
-.tag.tag-color-5 { color: var(--tag-5); background: color-mix(in srgb, var(--tag-5) 12%, var(--surface)); }
+.tag { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.85rem; text-decoration: none; color: var(--text); border: 1px solid var(--border); position: relative; padding-left: 0.85rem; }
+.tag:hover { filter: brightness(1.03); }
+/* Sidebar tag color variants with dot indicator for identity, maintain text contrast */
+.tag::before { content: ""; position: absolute; left: 0.55rem; top: 50%; width: 0.35rem; height: 0.35rem; border-radius: 999px; transform: translate(-50%, -50%); background: currentColor; }
+.tag.tag-color-0 { --chip: var(--tag-0); }
+.tag.tag-color-1 { --chip: var(--tag-1); }
+.tag.tag-color-2 { --chip: var(--tag-2); }
+.tag.tag-color-3 { --chip: var(--tag-3); }
+.tag.tag-color-4 { --chip: var(--tag-4); }
+.tag.tag-color-5 { --chip: var(--tag-5); }
+.tag[class*="tag-color-"] { background: color-mix(in srgb, var(--chip, var(--border)) 18%, var(--surface)); border-color: var(--chip, var(--border)); }
 
 /* Responsive */
 @media (max-width: 900px) {
