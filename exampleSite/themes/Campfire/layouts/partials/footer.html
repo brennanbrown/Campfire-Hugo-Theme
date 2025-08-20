@@ -1,0 +1,15 @@
+<div class="footer-inner">
+  <p>&copy; {{ now.Year }} {{ .Site.Title }} · Campfire Theme{{ with .Site.Params.campfire.version }} v{{ . }}{{ end }}</p>
+  <nav class="footer-meta" aria-label="Site meta">
+    {{ with .Site.Params.siteSource }}<a href="{{ . }}" rel="noopener noreferrer">Source</a>{{ end }}
+    {{ with .Site.Params.social.github }}<a href="{{ . }}" rel="me noopener">GitHub</a>{{ end }}
+    {{ with .Site.Params.social.twitter }}<a href="{{ . }}" rel="me noopener">Twitter</a>{{ end }}
+    {{ with .Site.Params.social.mastodon }}<a href="{{ . }}" rel="me noopener">Mastodon</a>{{ end }}
+    {{ with .Site.Params.social.linkedin }}<a href="{{ . }}" rel="me noopener">LinkedIn</a>{{ end }}
+  </nav>
+  <p class="licenses">
+    <span>Code: <a href="https://opensource.org/licenses/MIT" rel="license">MIT</a></span>
+    <span aria-hidden="true"> · </span>
+    <span>Content: <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC BY-SA 4.0</a></span>
+  </p>
+</div>

@@ -1,0 +1,54 @@
+baseURL = "https://campfire-hugo.netlify.app"
+title = "Campfire Example"
+theme = "Campfire"
+themesDir = "../"
+
+taxonomies = { tag = "tags", category = "categories" }
+
+defaultContentLanguage = "en"
+
+[pagination]
+  pagerSize = 5
+
+[params]
+  description = "A warm, story-focused Hugo theme where great stories find their home."
+  ogDefaultImage = "/images/og-default.jpg"
+  author = "Campfire Author"
+  authorBio = "Writing stories by the fire. This is placeholder copy you can replace."
+  authorAvatar = "/images/author-avatar.jpg"
+  newsletterURL = "#"
+  newsletterCTA = "Get cozy updates on new stories."
+
+[author]
+  name = "Campfire Author"
+
+[params.social]
+  twitter = "campfiretheme"
+  twitter_card = "summary_large_image"
+
+[params.campfire]
+  version = "1.0.0"
+
+[params.campfire.storytelling]
+  mode = "auto"              # daylight, firelight, campfire (auto)
+  fontPair = "storyteller"   # storyteller, explorer, adventurer
+  layout = "circle"          # circle, corner, clearing
+
+[params.campfire.gathering]
+  sidebar = true              # Enable "Storyteller's Corner"
+  newsletter = true           # "Story Updates" newsletter
+  search = false              # "Tale Search" functionality
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 2
+  [[menu.main]]
+    name = "Contact"
+    url = "/contact/"
+    weight = 3

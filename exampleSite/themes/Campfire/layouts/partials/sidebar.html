@@ -1,0 +1,70 @@
+<div class="sidebar-inner">
+  <section class="widget">
+    <h2 class="widget-title">Storyteller's Corner</h2>
+    <p>Welcome by the fire. Customize this sidebar via <code>layouts/partials/sidebar.html</code> or override in your site.</p>
+  </section>
+
+  {{ with .Site.Menus.main }}
+  <nav class="widget" aria-label="Main Navigation">
+    <h3 class="widget-title">Explore</h3>
+    <ul class="menu">
+    {{ range . }}
+      <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+    {{ end }}
+    </ul>
+  </nav>
+  {{ end }}
+
+  {{ $tags := .Site.Taxonomies.tags }}
+  {{ if $tags }}
+  <section class="widget">
+    <h3 class="widget-title">Popular Tags</h3>
+    <div class="tag-list">
+      {{ range first 10 ($tags.ByCount) }}
+        <a class="tag tag-color-{{ mod (len .Term) 6 }}" href="{{ (printf "/tags/%s/" (urlize .Term)) | relURL }}">#{{ .Term }}</a>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  <!-- Recent Posts -->
+  {{ $recent := first 5 (where .Site.RegularPages "Section" "posts") }}
+  {{ if $recent }}
+  <section class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <ul class="list-plain">
+      {{ range $recent }}
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+
+  <!-- Top Categories -->
+  {{ $cats := .Site.Taxonomies.categories }}
+  {{ if $cats }}
+  <section class="widget">
+    <h3 class="widget-title">Top Categories</h3>
+    <ul class="list-plain">
+      {{ range first 8 ($cats.ByCount) }}
+        <li>
+          <a href="{{ (printf "/categories/%s/" (urlize .Term)) | relURL }}">{{ .Term }}</a>
+          <span aria-hidden="true"> · </span>
+          <span class="count" aria-label="{{ .Count }} posts">{{ .Count }}</span>
+        </li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+
+  <!-- Newsletter Placeholder -->
+  <section class="widget">
+    <h3 class="widget-title">Story Updates</h3>
+    <form class="newsletter" action="#" method="post" onsubmit="return false" aria-label="Subscribe to newsletter">
+      <label for="newsletter-email" class="sr-only">Email address</label>
+      <input id="newsletter-email" class="input" type="email" placeholder="you@example.com" required />
+      <button class="btn" type="submit">Subscribe</button>
+      <p class="help">No spam. Unsubscribe anytime.</p>
+    </form>
+  </section>
+</div>

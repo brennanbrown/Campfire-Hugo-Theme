@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0b1022"/>
+      <stop offset="100%" stop-color="#141a2e"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="65%" r="35%">
+      <stop offset="0%" stop-color="#ffcf6e" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#ffcf6e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="flameOuter" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff9a3c"/>
+      <stop offset="100%" stop-color="#ff5a2f"/>
+    </linearGradient>
+    <linearGradient id="flameInner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff2b3"/>
+      <stop offset="100%" stop-color="#ffd072"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- Subtle stars -->
+  <g fill="#e6edf7" fill-opacity="0.22">
+    <circle cx="100" cy="80" r="2"/>
+    <circle cx="220" cy="140" r="1.5"/>
+    <circle cx="360" cy="60" r="1.8"/>
+    <circle cx="520" cy="110" r="1.2"/>
+    <circle cx="760" cy="70" r="1.6"/>
+    <circle cx="940" cy="130" r="1.4"/>
+    <circle cx="1080" cy="90" r="1.8"/>
+  </g>
+
+  <!-- Ground glow -->
+  <ellipse cx="600" cy="430" rx="220" ry="80" fill="url(#glow)"/>
+
+  <!-- Logs -->
+  <g transform="translate(600,430)">
+    <g transform="rotate(-18)">
+      <rect x="-170" y="28" rx="12" ry="12" width="340" height="24" fill="#6e4a2e"/>
+      <rect x="-170" y="28" rx="12" ry="12" width="340" height="24" fill="#845a3a" opacity="0.25"/>
+    </g>
+    <g transform="rotate(18)">
+      <rect x="-170" y="28" rx="12" ry="12" width="340" height="24" fill="#6e4a2e"/>
+      <rect x="-170" y="28" rx="12" ry="12" width="340" height="24" fill="#845a3a" opacity="0.25"/>
+    </g>
+  </g>
+
+  <!-- Flame -->
+  <g transform="translate(600,380)">
+    <!-- Outer flame -->
+    <path d="M0,-140 C 40,-90 70,-40 40,10 C 15,55 -10,80 0,120 C -10,80 -35,55 -60,10 C -90,-40 -60,-95 0,-140 Z" fill="url(#flameOuter)"/>
+    <!-- Inner flame -->
+    <path d="M0,-100 C 25,-70 40,-35 22,5 C 10,30 0,46 0,78 C 0,46 -10,30 -22,5 C -40,-35 -25,-72 0,-100 Z" fill="url(#flameInner)"/>
+  </g>
+
+  <!-- Title (optional minimal branding) -->
+  <text x="600" y="520" text-anchor="middle" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial" font-size="40" fill="#e6edf7" font-weight="700">Campfire</text>
+</svg>

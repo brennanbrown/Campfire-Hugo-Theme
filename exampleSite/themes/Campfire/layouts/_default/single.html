@@ -1,0 +1,54 @@
+{{ define "main" }}
+<article class="content">
+  <header class="post-header">
+    <h1 class="post-title">{{ .Title }}</h1>
+    <p class="post-meta">
+      {{ with .Date }}<span class="post-date">{{ .Format "Jan 2, 2006" }}</span>{{ end }}
+      {{ if eq .Section "posts" }}
+      <span aria-hidden="true"> · </span>
+      <span class="post-reading">A {{ .ReadingTime }}-minute story</span>
+      {{ end }}
+    </p>
+  </header>
+  <div class="post-content">
+    {{ .Content }}
+  </div>
+
+  <footer class="post-footer">
+    {{ $hasTax := or .Params.tags .Params.categories }}
+    {{ if $hasTax }}
+    <div class="post-taxonomies">
+      {{ with .Params.categories }}
+      <div class="cats">
+        <strong>Filed under:</strong>
+        {{ range $i, $c := . }}{{ if $i }}, {{ end }}<a href="{{ (printf "/categories/%s/" (urlize $c)) | relURL }}">{{ $c }}</a>{{ end }}
+      </div>
+      {{ end }}
+      {{ with .Params.tags }}
+      <div class="tags">
+        <strong>Tags:</strong>
+        {{ range $i, $t := . }}{{ if $i }}, {{ end }}<a class="badge badge-tag tag-color-{{ mod $i 6 }}" href="{{ (printf "/tags/%s/" (urlize $t)) | relURL }}">#{{ $t }}</a>{{ end }}
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+
+    {{ $p := . }}
+    {{ with .Params.tags }}
+    {{ $cur := . }}
+    {{ $candidates := where $p.Site.RegularPages "Permalink" "ne" $p.Permalink }}
+    {{ $related := first 3 (where $candidates "Params.tags" "intersect" $cur) }}
+    {{ if gt (len $related) 0 }}
+    <aside class="related">
+      <h2 class="related-title">Related tales</h2>
+      <ul>
+        {{ range $related }}
+          <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{ end }}
+      </ul>
+    </aside>
+    {{ end }}
+    {{ end }}
+  </footer>
+</article>
+{{ end }}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="campfire {{ with .Site.Params.campfire.storytelling.mode }}{{ if eq . "daylight" }}theme-daylight{{ else if eq . "firelight" }}theme-firelight{{ end }}{{ end }} {{ with .Site.Params.campfire.storytelling.fontPair }}fontpair-{{ . }}{{ end }}">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <a class="site-title" href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        {{ with .Site.Menus.main }}
+          <ul class="menu">
+            {{ range . }}
+              <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+            {{ end }}
+          </ul>
+        {{ end }}
+      </nav>
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+        <button id="nav-toggle" class="icon-btn hamburger" aria-expanded="false" aria-controls="site-nav" aria-label="Toggle menu">☰</button>
+      </div>
+    </header>
+
+    <div class="layout {{ if .Site.Params.campfire.gathering.sidebar }}has-sidebar{{ end }} {{ with .Site.Params.campfire.storytelling.layout }}layout-{{ . }}{{ end }}">
+      <main id="main-content" class="content-area" tabindex="-1">
+        {{ block "main" . }}{{ end }}
+      </main>
+      {{ if .Site.Params.campfire.gathering.sidebar }}
+      <aside class="sidebar" aria-label="Storyteller's Corner">
+        {{ partial "sidebar.html" . }}
+      </aside>
+      {{ end }}
+    </div>
+
+    <footer class="site-footer">
+      {{ partial "footer.html" . }}
+    </footer>
+    <script>
+      (function() {
+        function getStoredTheme(){ try { return localStorage.getItem('campfireTheme'); } catch(e) { return null; } }
+        function storeTheme(t){ try { localStorage.setItem('campfireTheme', t); } catch(e) {} }
+        function applyTheme(t){ var b=document.body; if(!b) return; b.classList.remove('theme-daylight','theme-firelight'); b.classList.add(t); var btn=document.getElementById('theme-toggle'); if(btn){ btn.textContent = (t==='theme-firelight') ? '🌙' : '☀️'; btn.setAttribute('aria-label','Toggle theme'); } }
+        function currentTheme(){ return document.body.classList.contains('theme-firelight') ? 'theme-firelight' : 'theme-daylight'; }
+        document.addEventListener('DOMContentLoaded', function(){
+          var stored = getStoredTheme();
+          if(stored){ applyTheme(stored); }
+          var toggle = document.getElementById('theme-toggle');
+          if(!stored && toggle){ toggle.textContent = currentTheme()==='theme-firelight' ? '🌙' : '☀️'; }
+          if(toggle){ toggle.addEventListener('click', function(){ var next = currentTheme()==='theme-firelight' ? 'theme-daylight' : 'theme-firelight'; applyTheme(next); storeTheme(next); }); }
+          var navToggle = document.getElementById('nav-toggle');
+          var nav = document.getElementById('site-nav');
+          function closeNav(){ if(nav && nav.classList.contains('open')){ nav.classList.remove('open'); if(navToggle){ navToggle.setAttribute('aria-expanded','false'); } } }
+          if(navToggle && nav){
+            navToggle.addEventListener('click', function(e){
+              var open = nav.classList.toggle('open');
+              navToggle.setAttribute('aria-expanded', open ? 'true':'false');
+              e.stopPropagation();
+            });
+            // Close when clicking outside
+            document.addEventListener('click', function(e){ if(!nav.contains(e.target) && e.target !== navToggle){ closeNav(); } });
+            // Close on Escape
+            document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeNav(); } });
+            // Close when a menu link is clicked
+            nav.addEventListener('click', function(e){ var t = e.target; if(t && t.tagName === 'A'){ closeNav(); } });
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
