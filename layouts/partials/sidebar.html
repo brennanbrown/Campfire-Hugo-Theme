@@ -1,0 +1,73 @@
+<div class="sidebar-inner">
+  <section class="widget">
+    <h2 class="widget-title">Storyteller's Corner</h2>
+    <p>Welcome by the fire. Customize this sidebar via <code>layouts/partials/sidebar.html</code> or override in your site.</p>
+  </section>
+
+  <!-- Author Card -->
+  <section class="widget" aria-labelledby="author-card-title">
+    <h3 id="author-card-title" class="widget-title">About the Author</h3>
+    <div class="author-card">
+      {{ $avatar := or .Site.Params.authorAvatar "/images/og-default.jpg" }}
+      <img src="{{ $avatar | relURL }}" alt="Author avatar" style="width:64px;height:64px;border-radius:50%;object-fit:cover;" />
+      <div>
+        <strong>{{ or .Site.Params.author .Site.Author.name "Campfire Author" }}</strong>
+        <p>{{ or .Site.Params.authorBio "Writing stories by the fire. Replace this bio via site params." }}</p>
+      </div>
+    </div>
+  </section>
+
+  {{ with .Site.Menus.main }}
+  <nav class="widget" aria-label="Main Navigation">
+    <h3 class="widget-title">Explore</h3>
+    <ul class="menu">
+    {{ range . }}
+      <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+    {{ end }}
+    </ul>
+  </nav>
+  {{ end }}
+
+  <!-- Recent Posts -->
+  {{ $recent := first 5 (where .Site.RegularPages "Section" "posts") }}
+  {{ if gt (len $recent) 0 }}
+  <section class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <ul>
+      {{ range $recent }}
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+
+  {{ with .Site.Taxonomies.tags }}
+  <section class="widget">
+    <h3 class="widget-title">Popular Tags</h3>
+    <div class="tag-list">
+    {{ range first 10 . }}<a class="tag" href="{{ .Page.RelPermalink }}">#{{ .Page.Title }}</a> {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Site.Taxonomies.categories }}
+  <section class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <ul>
+      {{ range first 10 . }}
+        <li><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a></li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+
+  <!-- Newsletter Box -->
+  {{ if .Site.Params.campfire.gathering.newsletter }}
+  <section class="widget">
+    <h3 class="widget-title">Story Updates</h3>
+    <p>{{ or .Site.Params.newsletterCTA "Get cozy updates on new stories." }}</p>
+    {{ $nl := or .Site.Params.newsletterURL "#" }}
+    <p><a class="button" href="{{ $nl }}">Subscribe</a></p>
+  </section>
+  {{ end }}
+</div>

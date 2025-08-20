@@ -1,0 +1,17 @@
+{{ define "main" }}
+<section class="taxonomy">
+  <h1>{{ .Title }}</h1>
+  {{ if .Pages }}
+  <ul class="post-list">
+    {{ range .Pages }}
+      <li class="post-item">
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        {{ with .Date }}<span class="post-date">— {{ .Format "Jan 2, 2006" }}</span>{{ end }}
+      </li>
+    {{ end }}
+  </ul>
+  {{ else }}
+    <p>No entries found.</p>
+  {{ end }}
+</section>
+{{ end }}

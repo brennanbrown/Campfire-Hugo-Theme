@@ -1,0 +1,10 @@
+name = "Campfire"
+license = "MIT"
+licenselink = "https://github.com/brennanbrown/Campfire-Hugo-Theme/blob/main/LICENSE"
+description = "A warm, story-focused Hugo theme where great stories find their home."
+homepage = "https://github.com/brennanbrown/Campfire-Hugo-Theme"
+min_version = "0.125.0"
+
+[author]
+  name = "Brennan Brown"
+  homepage = "https://brennanbrown.ca"

@@ -1,0 +1,48 @@
+{{- $title := cond .IsHome .Site.Title (printf "%s · %s" .Title .Site.Title) -}}
+{{- $description := (or .Params.description .Description .Summary .Site.Params.description) | plainify | html -}}
+{{- $imgParam := or (index .Params "images") (slice) -}}
+{{- $pageImage := cond (gt (len $imgParam) 0) (index $imgParam 0) nil -}}
+{{- $defaultImage := .Site.Params.ogDefaultImage -}}
+{{- $image := or $pageImage $defaultImage -}}
+{{- $canonical := .Permalink -}}
+{{- $siteTwitter := .Site.Params.social.twitter -}}
+{{- $authorName := or .Params.author .Site.Params.author -}}
+
+<meta name="description" content="{{ with $description }}{{ . }}{{ end }}" />
+<link rel="canonical" href="{{ $canonical }}" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}" />
+<meta property="og:title" content="{{ $title }}" />
+<meta property="og:description" content="{{ with $description }}{{ . }}{{ end }}" />
+<meta property="og:url" content="{{ $canonical }}" />
+{{ with $image }}<meta property="og:image" content="{{ . | absURL }}" />{{ end }}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="{{ or .Site.Params.social.twitter_card "summary_large_image" }}" />
+<meta name="twitter:title" content="{{ $title }}" />
+<meta name="twitter:description" content="{{ with $description }}{{ . }}{{ end }}" />
+{{ with $image }}<meta name="twitter:image" content="{{ . | absURL }}" />{{ end }}
+{{ with $siteTwitter }}<meta name="twitter:site" content="@{{ . }}" />{{ end }}
+{{ with (or .Params.author_twitter $siteTwitter) }}<meta name="twitter:creator" content="@{{ . }}" />{{ end }}
+
+<!-- JSON-LD (Website/Article minimal) -->
+{{ if .IsHome }}
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "url": "{{ .Site.BaseURL }}",
+  "name": "{{ .Site.Title }}"
+}</script>
+{{ else }}
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ .Title }}",
+  "datePublished": "{{ .Date.Format "2006-01-02" }}",
+  "dateModified": "{{ with .Lastmod }}{{ .Format "2006-01-02" }}{{ else }}{{ .Date.Format "2006-01-02" }}{{ end }}",
+  "author": {"@type": "Person", "name": "{{ $authorName }}"},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "{{ $canonical }}"}
+}
+</script>
+{{ end }}

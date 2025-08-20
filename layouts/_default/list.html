@@ -1,0 +1,64 @@
+{{ define "main" }}
+<section class="list">
+  {{ if .IsHome }}
+    {{ $all := where .Site.RegularPages "Section" "posts" }}
+    {{ $p := .Paginate $all }}
+
+    {{ if eq $p.PageNumber 1 }}
+      <div class="home-intro" style="margin: 0 0 1rem 0;">
+        <h1 class="home-title" style="margin: 0 0 0.25rem 0;">{{ .Site.Params.homeTitle | default .Site.Title }}</h1>
+        {{ with .Site.Params.authorBio }}<p class="home-blurb" style="margin: 0;">{{ . }}</p>{{ end }}
+      </div>
+    {{ end }}
+
+    <ul class="post-list">
+      {{ range $p.Pages }}
+        <li class="post-item">
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          {{ with .Date }}<span class="post-date">— {{ .Format "Jan 2, 2006" }}</span>{{ end }}
+          <div class="badges" aria-label="Taxonomies">
+            {{ with .Params.categories }}
+              {{ range . }}<a class="badge badge-category" href="{{ (printf "/categories/%s/" (urlize .)) | relURL }}">{{ . }}</a>{{ end }}
+            {{ end }}
+            {{ with .Params.tags }}
+              {{ range $i, $t := . }}<a class="badge badge-tag tag-color-{{ mod $i 6 }}" href="{{ (printf "/tags/%s/" (urlize $t)) | relURL }}">#{{ $t }}</a>{{ end }}
+            {{ end }}
+          </div>
+        </li>
+      {{ end }}
+    </ul>
+
+    <nav class="pagination" role="navigation" aria-label="Pagination">
+      {{ if $p.HasPrev }}<a href="{{ $p.Prev.URL }}" rel="prev">← Newer</a>{{ else }}<span>← Newer</span>{{ end }}
+      <span class="current">Page {{ $p.PageNumber }} of {{ $p.TotalPages }}</span>
+      {{ if $p.HasNext }}<a href="{{ $p.Next.URL }}" rel="next">Older →</a>{{ else }}<span>Older →</span>{{ end }}
+    </nav>
+
+  {{ else }}
+    <h1>{{ .Title }}</h1>
+    {{ $p := .Paginate (.Pages) }}
+    <ul class="post-list">
+      {{ range $p.Pages }}
+        <li class="post-item">
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          {{ with .Date }}<span class="post-date">— {{ .Format "Jan 2, 2006" }}</span>{{ end }}
+          <div class="badges" aria-label="Taxonomies">
+            {{ with .Params.categories }}
+              {{ range . }}<a class="badge badge-category" href="{{ (printf "/categories/%s/" (urlize .)) | relURL }}">{{ . }}</a>{{ end }}
+            {{ end }}
+            {{ with .Params.tags }}
+              {{ range $i, $t := . }}<a class="badge badge-tag tag-color-{{ mod $i 6 }}" href="{{ (printf "/tags/%s/" (urlize $t)) | relURL }}">#{{ $t }}</a>{{ end }}
+            {{ end }}
+          </div>
+        </li>
+      {{ end }}
+    </ul>
+
+    <nav class="pagination" role="navigation" aria-label="Pagination">
+      {{ if $p.HasPrev }}<a href="{{ $p.Prev.URL }}" rel="prev">← Newer</a>{{ else }}<span>← Newer</span>{{ end }}
+      <span class="current">Page {{ $p.PageNumber }} of {{ $p.TotalPages }}</span>
+      {{ if $p.HasNext }}<a href="{{ $p.Next.URL }}" rel="next">Older →</a>{{ else }}<span>Older →</span>{{ end }}
+    </nav>
+  {{ end }}
+</section>
+{{ end }}
