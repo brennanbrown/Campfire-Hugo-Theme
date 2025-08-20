@@ -31,6 +31,9 @@
   --link: var(--campfire-ember);
   --link-hover: var(--campfire-flame);
 
+  /* Category color token */
+  --category: var(--campfire-stone);
+
   /* Tag palette */
   --tag-0: #ff6b35; /* ember */
   --tag-1: #2a9d8f; /* teal */
@@ -65,9 +68,12 @@ body.campfire.fontpair-adventurer {
     --text: #e9ecf5; /* starlight text */
     --heading: #f2f5fb;
 
-    /* Dark mode link tokens: darker and less saturated than default ember/flame */
-    --link: color-mix(in srgb, var(--campfire-ember) 70%, var(--text));
-    --link-hover: color-mix(in srgb, var(--campfire-flame) 55%, var(--text));
+    /* Dark mode link tokens: readable base, vivid hover */
+    --link: color-mix(in srgb, var(--campfire-ember) 80%, var(--text));
+    --link-hover: var(--campfire-flame);
+
+    /* Dark mode category color: brighter, distinct */
+    --category: var(--tag-2);
   }
 }
 
@@ -108,19 +114,27 @@ body.campfire {
   border-bottom: 1px solid var(--border);
 }
 .site-footer { border-top: 1px solid var(--border); border-bottom: none; }
-.site-title { text-decoration: none; color: var(--heading); font-weight: 700; }
+.site-title { text-decoration: underline; color: var(--heading); font-weight: 700; }
 
 main { max-width: var(--container); margin: 2rem auto; padding: 0 1rem; }
 
 h1, h2, h3, h4 { font-family: var(--font-serif); color: var(--heading); }
+/* Headings sizing */
+h1 { font-size: 2.25rem; line-height: 1.15; margin: 0.6rem 0 0.8rem; }
+h2 { font-size: 1.6rem; line-height: 1.2; margin: 1rem 0 0.6rem; }
+@media (min-width: 768px) {
+  h1 { font-size: 2.6rem; }
+  h2 { font-size: 1.8rem; }
+}
 .post-title { margin-bottom: 0.25rem; }
 .post-date { color: var(--campfire-ash); font-size: 0.9rem; margin-top: 0; }
 
 .post-list { list-style: none; padding: 0; }
 .post-item { margin: 1.75rem 0; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
 .post-list > .post-item:last-child { border-bottom: none; padding-bottom: 0; }
-.post-item a { color: var(--link); text-decoration: none; }
-.post-item a:hover { color: var(--link-hover); text-decoration: underline; }
+/* Bold only the primary title link (direct child), not badges */
+.post-item > a { color: var(--link); text-decoration: none; font-weight: 700; }
+.post-item > a:hover { color: var(--link-hover); text-decoration: underline; }
 /* Taxonomy badges */
 .badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.25rem; }
 .badge {
@@ -128,6 +142,7 @@ h1, h2, h3, h4 { font-family: var(--font-serif); color: var(--heading); }
   padding: 0.15rem 0.5rem;
   font-size: 0.8rem;
   line-height: 1.2;
+  font-weight: 400;
   border-radius: 999px;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -135,7 +150,7 @@ h1, h2, h3, h4 { font-family: var(--font-serif); color: var(--heading); }
   text-decoration: none;
 }
 .badge:hover { background: color-mix(in srgb, var(--campfire-ember) 10%, var(--surface)); border-color: var(--campfire-ember); }
-.badge-category { color: var(--heading); }
+.badge-category { color: var(--category); }
 
 /* Tag color variants */
 .badge-tag[class*="tag-color-"] { background: color-mix(in srgb, currentColor 12%, var(--surface)); border-color: currentColor; }
@@ -288,9 +303,12 @@ a:focus-visible { text-decoration: underline; }
 .theme-firelight .post-date { color: color-mix(in srgb, var(--text) 70%, var(--campfire-ash) 30%); }
 /* Dark mode link tokens for explicit class override (keeps it cohesive if class is used) */
 .theme-firelight { 
-  --link: color-mix(in srgb, var(--campfire-ember) 70%, var(--text));
-  --link-hover: color-mix(in srgb, var(--campfire-flame) 55%, var(--text));
+  --link: color-mix(in srgb, var(--campfire-ember) 80%, var(--text));
+  --link-hover: var(--campfire-flame);
+  --category: var(--tag-2);
 }
+/* Site title in dark mode: white for clarity */
+.theme-firelight .site-title { color: #ffffff; }
 
 /* Home blurb (intro text under homepage title) */
 .home-blurb { color: var(--campfire-stone); }

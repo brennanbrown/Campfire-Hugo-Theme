@@ -18,6 +18,8 @@ defaultContentLanguage = "en"
   authorAvatar = "/images/author-avatar.jpg"
   newsletterURL = "#"
   newsletterCTA = "Get cozy updates on new stories."
+  # Homepage hero title (used on the home list page)
+  homeTitle = "Latest Stories"
 
 [author]
   name = "Campfire Author"
