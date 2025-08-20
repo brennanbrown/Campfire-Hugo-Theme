@@ -1,7 +1,7 @@
 baseURL = "https://campfire-hugo.netlify.app"
 title = "Campfire Example"
 theme = "Campfire"
-themesDir = "../"
+themesDir = "themes"
 
 taxonomies = { tag = "tags", category = "categories" }
 
